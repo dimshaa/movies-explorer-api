@@ -7,6 +7,7 @@ const { errors } = require('celebrate');
 const router = require('./routes');
 const { errorHandler } = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const limiter = require('./middlewares/limiter');
 
 const { PORT = 3000 } = process.env;
 
@@ -20,6 +21,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(requestLogger);
+
+app.use(limiter);
 
 app.use(router);
 
