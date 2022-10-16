@@ -19,6 +19,7 @@ router.use((req, res, next) => {
 });
 
 router.use('/users', require('./users'));
+router.use('/movies', require('./movies'));
 
 router.all('*', (req, res, next) => {
   next(new NotFoundError('No such directory'));
