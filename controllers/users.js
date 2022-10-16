@@ -1,10 +1,10 @@
-// const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const BadRequestError = require('../utils/errors/BadRequestError');
 const ConflictError = require('../utils/errors/ConflictError');
+const NotFoundError = require('../utils/errors/NotFoundError');
 
 const createUser = (req, res, next) => {
   const {
@@ -47,7 +47,43 @@ const login = (req, res, next) => {
     .catch(next);
 };
 
+const getUserInfo = (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (!user) {
+        next(new NotFoundError('User not found'));
+      } else {
+        res.send(user);
+      }
+    })
+    .catch(next);
+};
+
+const updateUserInfo = (req, res, next) => {
+  const { email, name } = req.body;
+
+  User.findByIdAndUpdate(req.user._id, { email, name }, { new: true, runValidators: true })
+    .then((user) => {
+      if (!user) {
+        next(new NotFoundError('User not found!'));
+      } else {
+        res.send(user);
+      }
+    })
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Incorrect data'));
+      } else if (err.code === 11000) {
+        next(new ConflictError('User already exists'));
+      } else {
+        next(err);
+      }
+    });
+};
+
 module.exports = {
   createUser,
   login,
+  getUserInfo,
+  updateUserInfo,
 };
