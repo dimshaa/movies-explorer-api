@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+const auth = require('../middlewares/auth');
 const { createUser, login } = require('../controllers/users');
 const NotFoundError = require('../utils/errors/NotFoundError');
 
@@ -10,13 +11,7 @@ router.get('/signout', (req, res) => {
 });
 
 // auth imitation
-router.use((req, res, next) => {
-  req.user = {
-    _id: '634c0cfdfeadb66beb594180',
-  };
-
-  next();
-});
+router.use(auth);
 
 router.use('/users', require('./users'));
 router.use('/movies', require('./movies'));

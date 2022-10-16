@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+
 const router = require('./routes');
 
 const { PORT = 3000 } = process.env;
@@ -12,6 +14,7 @@ mongoose.connect('mongodb://localhost:27017/moviesdb', {
 });
 
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use(router);
 
