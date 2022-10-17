@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
@@ -10,11 +12,17 @@ const { errorHandler } = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./middlewares/limiter');
 
-const { PORT = 3000 } = process.env;
+const { MONGO_URL_DEV } = require('./utils/configuration');
+
+const {
+  PORT = 3000,
+  NODE_ENV,
+  MONGO_URL,
+} = process.env;
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/moviesdb', {
+mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : MONGO_URL_DEV, {
   useNewUrlParser: true,
 });
 

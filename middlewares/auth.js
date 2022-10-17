@@ -2,6 +2,10 @@ const jwt = require('jsonwebtoken');
 
 const UnauthorisedError = require('../utils/errors/UnauthorizedError');
 
+const { JWT_SECRET_DEV } = require('../utils/configuration');
+
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const auth = (req, res, next) => {
   const token = req.cookies.jwt;
 
@@ -12,7 +16,7 @@ const auth = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, 'super-secret-key');
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV);
   } catch (err) {
     next(new UnauthorisedError('Authorisation error'));
   }
