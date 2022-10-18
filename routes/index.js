@@ -7,14 +7,15 @@ const { checkCreateUser, checkLogin } = require('../middlewares/validation');
 
 router.post('/signup', checkCreateUser, createUser);
 router.post('/signin', checkLogin, login);
-router.get('/signout', (req, res) => {
-  res.clearCookie('jwt').send({ message: 'Выход' });
-});
 
 router.use(auth);
 
 router.use('/users', require('./users'));
 router.use('/movies', require('./movies'));
+
+router.get('/signout', (req, res) => {
+  res.clearCookie('jwt').send({ message: 'Выход' });
+});
 
 router.all('*', (req, res, next) => {
   next(new NotFoundError('No such directory'));
