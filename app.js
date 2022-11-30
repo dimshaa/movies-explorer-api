@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const { errors } = require('celebrate');
 
 const router = require('./routes');
@@ -25,6 +26,11 @@ const app = express();
 mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : MONGO_URL_DEV, {
   useNewUrlParser: true,
 });
+
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://mydiploma.nomoredomains.icu', 'https://mydiploma.nomoredomains.icu'],
+  credentials: true,
+}));
 
 app.use(helmet());
 
