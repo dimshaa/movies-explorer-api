@@ -59,7 +59,7 @@ const deleteMovie = (req, res, next) => {
           .then(() => {
             res.send({ message: 'Movie was sucessfully deleted!' });
           })
-          .cath(next);
+          .catch(next);
       } else {
         next(new ForbiddenError('User permission'));
       }
