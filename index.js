@@ -28,7 +28,7 @@ mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : MONGO_URL_DEV, {
 });
 
 app.use(cors({
-  origin: ['http://localhost:3001', 'http://localhost:3000', 'http://mydiploma.nomoredomains.icu', 'https://mydiploma.nomoredomains.icu'],
+  origin: ['http://localhost:3001', 'https://mydiploma.vercel.app/', 'http://localhost:3000', 'http://mydiploma.nomoredomains.icu', 'https://mydiploma.nomoredomains.icu'],
   credentials: true,
 }));
 
