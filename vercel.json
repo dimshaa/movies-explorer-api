@@ -1,4 +1,4 @@
 {
-  "fucnctions": { "index.js": { "runtime": "@vercel/node" } },
+  "functions": { "index.js": { "runtime": "@vercel/node" } },
   "rewrites": [{ "source": "/(.*)", "destination": "index.js" }]
 }
