@@ -1,5 +1,5 @@
 const JWT_SECRET_DEV = 'super-secret-dev-key';
-const MONGO_URL_DEV = 'mongodb://localhost:27017/moviesdbdev';
+const MONGO_URL_DEV = 'mongodb+srv://vercel-admin-user:dJvdjzHxFm2MFntY@mycluster.yq0qqgo.mongodb.net/devMoviesDB';
 
 module.exports = {
   JWT_SECRET_DEV,
